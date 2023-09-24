@@ -1,23 +1,11 @@
 const express = require("express");
-var cors = require("cors");
-const app = express();
-const db = require("./config/mongoose");
-const port = process.env.port || 8000;
+const router = express.Router();
 
-//use cros
-app.use(cors());
+// Handling v1 routes
+router.use("/doctors", require("./doctors"));
 
-// body parser for req.body
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
-// use express router
-app.use("/", require("./routes"));
+router.use("/patients", require("./patients"));
+router.use("/reports", require("./reports"));
 
-//Server Listner
-app.listen(port, function (err) {
-  if (err) {
-    console.log("Error Running the Server", err);
-  }
-  console.log("Server Running on Port: ", port);
-});
+module.exports = router;
